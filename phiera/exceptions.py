@@ -1,0 +1,3 @@
+
+class InterpolationError(Exception):
+  pass
