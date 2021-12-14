@@ -38,7 +38,6 @@ pip install phiera
 pip install git+https://github.com/Nike-Inc/phiera#egg=phiera
 ```
 
-
 ### Manually
 
 ```bash
