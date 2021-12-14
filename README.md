@@ -42,7 +42,7 @@ pip install git+https://github.com/Nike-Inc/phiera#egg=phiera
 ### Manually
 
 ```bash
-git git clone git@github.nike.com/falcon/phiera.git
+git clone git@github.com/Nike-Inc/phiera.git
 cd phiera
 python setup.py install
 ```
