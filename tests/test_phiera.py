@@ -1,6 +1,9 @@
+import logging
 import os
 import unittest
+
 import phiera
+import pytest
 
 try:
     import StringIO
@@ -8,7 +11,7 @@ except ImportError:
     import io as StringIO
 
 current_dirname, _ = os.path.split(os.path.abspath(__file__))
-
+LOGGER = logging.getLogger(__name__)
 
 class BaseTestPiera(unittest.TestCase):
     def setUp(self):
@@ -59,6 +62,11 @@ class TestPieraConfig(unittest.TestCase):
 
 
 class TestPiera(BaseTestPiera):
+
+    @pytest.fixture(autouse=True)
+    def inject_fixtures(self, caplog):
+        self._caplog = caplog
+ 
     def test_different_path(self):
         os.chdir("/tmp")
         hiera = phiera.Hiera(os.path.join(self.base, 'hiera.yaml'), name='test')
@@ -123,6 +131,12 @@ class TestPiera(BaseTestPiera):
     def test_throw_keyerror(self):
         with self.assertRaises(KeyError):
             self.hiera.get('nope', throw=True)
+
+    def test_error_message_when_key_does_not_exist(self):
+        lookup_key = 'module.my_test_module.my_secret_key'
+        self.hiera.get(lookup_key)
+        assert f"Lookup key: '{lookup_key}' not found. "
+        "Make sure you are providing this key in YAML configuration." in self._caplog.text
 
     def test_has(self):
         self.assertTrue(self.hiera.has('test_complex_alias'))

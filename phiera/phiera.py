@@ -1,4 +1,6 @@
-import re, os
+import re
+import os
+import logging
 from copy import deepcopy
 
 from .exceptions import InterpolationError
@@ -8,6 +10,8 @@ from .util import LookupDict, sym_lookup
 function = re.compile(r'''%\{(scope|hiera|lookup|literal|alias)\(['"](?:::|)([^"']*)["']\)\}''')
 interpolate = re.compile(r'''%\{(?:::|)([^\}]*)\}''')
 rformat = re.compile(r'''%{(?:::|)([a-zA-Z_-|\d]+)}''')
+
+LOGGER = logging.getLogger(__name__)
 
 class Merge(object):
     def __init__(self, typ, deep=False):
@@ -304,8 +308,10 @@ class Hiera(object):
 
         if merge and key in merges and merges[key].value is not None:
             return merges[key].value
-
-        raise KeyError(key)
+        else:
+            if key!= None and len(key.split('.')) > 1:
+                LOGGER.error("Lookup key: '{}' not found. Make sure you are providing this key in YAML configuration.".format(key))
+            raise KeyError(key)
 
     def scoped(self, context={}, **kwargs):
         context.update(kwargs)
