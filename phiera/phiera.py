@@ -154,11 +154,11 @@ class Hiera(object):
 
         # Load our heirarchy
         for path in hierarchy:
-            self.hierarchy.append(rformat.sub("{\g<1>}", path, count=0))
+            self.hierarchy.append(rformat.sub(r"{\g<1>}", path, count=0))
 
         # Load our backends
         for backend in list(self.backends.values()):
-            backend.datadir = rformat.sub("{\g<1>}", backend.datadir, count=0)
+            backend.datadir = rformat.sub(r"{\g<1>}", backend.datadir, count=0)
 
         # Now pre-load/cache a bunch of global stuff. If context vars where provided
         #  in the constructor, we'll also load those files into the cache.

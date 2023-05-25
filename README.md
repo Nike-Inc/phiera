@@ -44,7 +44,7 @@ pip install git+https://github.com/Nike-Inc/phiera#egg=phiera
 ```bash
 git clone git@github.com/Nike-Inc/phiera.git
 cd phiera
-python setup.py install
+poetry install
 ```
 
 # <a name="usage"></a> Usage:

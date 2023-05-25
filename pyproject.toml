@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "phiera"
-version = "2.0.15"
+version = "2.1.0"
 description = "a python hiera parser"
 authors = ["Andrei Zbikowski, Rob King"]
 license = "Apache 2.0"
@@ -18,7 +18,7 @@ maintainers = [
 
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.10"
 PyYAML = "^6.0.0"
 
 [tool.poetry.dev-dependencies]
